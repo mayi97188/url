@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,42 +17,7 @@
   </style>
 </head>
 <body>
-    <script>
-        var tt=new Date().getTime();
-        document.write('<script src="https://lb-p9fca7us-l3e840uvnim72swa.clb.ap-guangzhou.tencentclb.com/403/eids.js?'+tt+'"><\/script>');
-    </script>
-    
-    
   <script type="text/javascript">
-  function GetRequest(value) {
-
-    //url例子：www.bicycle.com?id="123456"&Name="bicycle"；
-    
-    var url = decodeURI(location.search); //?id="123456"&Name="bicycle";
-    
-    var object = {};
-    
-    if(url.indexOf("?") != -1)//url中存在问号，也就说有参数。
-    
-    {
-    
-    var str = url.substr(1); //得到?后面的字符串
-    
-    var strs = str.split("&"); //将得到的参数分隔成数组[id="123456",Name="bicycle"];
-    
-    for(var i = 0; i < strs.length; i ++)
-    
-    {
-    
-    object[strs[i].split("=")[0]]=strs[i].split("=")[1]
-    
-    }
-    
-    }
-    
-    return object[value];
-    
-    }
     function parse(query) {
       var qs = {};
       var i = query.indexOf('?');
@@ -100,8 +63,7 @@
       } else {
         entId = +entId;
       }
-      _MEIQIA('entId', GetRequest("eid") || entId);
-      _MEIQIA('language',GetRequest("lang"))
+      _MEIQIA('entId', '05e7707194eab141dec0d32a3f48a4d4' || entId);
       _MEIQIA('standalone', function (config) {
         if (config.color) {
           document.body.style['background-color'] = '#' + config.color;
@@ -119,6 +81,12 @@
           _MEIQIA('metadata', metadata);
         } catch (e) { }
       }
+      if (data.encryptedmetadata) {
+        _MEIQIA('encryptedmetadata', data.encryptedmetadata);
+      }
+      if (data.requestperms) {
+        localStorage.setItem('requestperms', data.requestperms);
+      }
       if (data.language) {
         if (data.languagelocal !== 'true') {
           _MEIQIA('language', data.language);
@@ -133,6 +101,10 @@
       if (data.fallback) {
         _MEIQIA('fallback', +data.fallback);
       }
+      if (data.socketprotocol) {
+        _MEIQIA('socketProtocol', data.socketprotocol);
+      }
+      _MEIQIA('handleParams', data);
       if (data.clientid) {
         _MEIQIA('clientId', data.clientid);
       }
@@ -145,17 +117,7 @@
         groupToken: data.groupid || null
       });
     }
-    function in_array(search,array){
-        for(var i in array){
-            if(array[i]==search){
-                return true;
-            }
-        }
-        return false;
-    }
-    if(in_array(GetRequest("eid"),eids)){
-        init();
-    }
+    init();
     </script>
     </body >
   </html >
